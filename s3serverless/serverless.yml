@@ -1,0 +1,34 @@
+org: beatriz
+app: aws-node-2
+service: s3serverless
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  # environment:
+  #   tableName: ${self:custom.tableName}
+  # iamRoleStatements:
+  #   - Effect : Allow
+  #     Action:
+  #       - dynamodb:*
+  #     Resource: '*'
+
+plugins:
+  - serverless-s3-sync
+
+custom:
+  s3Sync:
+    - bucketName: myserverlessprojectbucket-2024
+      localDir: UploadData
+
+functions:
+  function1:
+    handler: index.handler
+
+resources:
+  Resources:
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: myserverlessprojectbucket-2024
